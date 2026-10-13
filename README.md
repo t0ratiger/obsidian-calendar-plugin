@@ -72,6 +72,26 @@ If you use "Inspect Element" on the calendar, you will notice that the CSS class
 
 You can install the plugin via the Community Plugins tab within Obsidian. Just search for "Calendar."
 
+## Development
+
+Use Node.js 24 (the exact version is in `.node-version`) and pnpm 11.3.0,
+as specified by `packageManager` in `package.json`.
+
+```sh
+pnpm install --frozen-lockfile
+pnpm run build
+pnpm run test --runInBand
+```
+
+The build runs Svelte checks and ESLint before generating `main.js`.
+The repository currently has no test cases; the test command succeeds when none
+are found. `pnpm run test:watch` starts Jest in watch mode.
+
+Commit dependency changes together with `pnpm-lock.yaml`.
+Legacy Obsidian API dependencies are pinned to the commit from the original Yarn
+lockfile in `pnpm-workspace.yaml`. Node type definitions remain at version 14 to
+preserve compatibility with TypeScript 4.2; the development runtime is Node 24.
+
 ## FAQ
 
 ### What do the dots mean?

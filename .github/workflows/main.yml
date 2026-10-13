@@ -6,17 +6,30 @@ on:
   pull_request:
     branches: [master]
 
+permissions:
+  contents: read
+
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          cache: true
 
       - name: Install modules
-        run: yarn
+        run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: yarn run lint
+      - name: Lint and build
+        run: pnpm run build
 
       - name: Run tests
-        run: yarn run test
+        run: pnpm run test --runInBand

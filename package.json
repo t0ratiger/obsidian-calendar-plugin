@@ -5,14 +5,18 @@
   "author": "liamcain",
   "main": "main.js",
   "license": "MIT",
+  "packageManager": "pnpm@11.3.0",
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "lint": "svelte-check && eslint . --ext .ts",
-    "build": "npm run lint && rollup -c",
+    "build": "pnpm run lint && rollup -c",
     "test": "jest --passWithNoTests",
-    "test:watch": "yarn test -- --watch"
+    "test:watch": "jest --watch"
   },
   "dependencies": {
-    "obsidian": "obsidianmd/obsidian-api#master",
+    "obsidian": "obsidianmd/obsidian-api#dbfa19ad7aa6557f0ecff962065c3f540bc77e27",
     "obsidian-calendar-ui": "0.3.12",
     "obsidian-daily-notes-interface": "0.9.0",
     "svelte": "3.35.0",
@@ -25,6 +29,7 @@
     "@tsconfig/svelte": "1.0.10",
     "@types/jest": "26.0.22",
     "@types/moment": "2.13.0",
+    "@types/node": "14.14.21",
     "@typescript-eslint/eslint-plugin": "4.20.0",
     "@typescript-eslint/parser": "4.20.0",
     "eslint": "7.23.0",

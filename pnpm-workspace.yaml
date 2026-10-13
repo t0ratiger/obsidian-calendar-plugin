@@ -1,0 +1,12 @@
+# Keep legacy transitive Obsidian references on the commit from yarn.lock.
+overrides:
+  obsidian: "$obsidian"
+  # 0.7.3 mistakes Node's global fetch for a browser and fails to load its WASM.
+  "source-map@0.7.3": "0.7.4"
+
+# Legacy daily-notes packages depend on the Git-hosted API; the override pins it.
+blockExoticSubdeps: false
+
+allowBuilds:
+  # Its postinstall only prints a reminder; compilation does not need it.
+  svelte-preprocess: false
