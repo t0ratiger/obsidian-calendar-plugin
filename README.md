@@ -1,5 +1,7 @@
 # obsidian-calendar-plugin
 
+This is a fork of [liamcain/obsidian-calendar-plugin](https://github.com/liamcain/obsidian-calendar-plugin).
+
 This plugin for [Obsidian](https://obsidian.md/) creates a simple Calendar view for visualizing and navigating between your daily notes.
 
 ![screenshot-full](https://raw.githubusercontent.com/liamcain/obsidian-calendar-plugin/master/images/screenshot-full.png)
@@ -9,6 +11,12 @@ This plugin for [Obsidian](https://obsidian.md/) creates a simple Calendar view 
 After enabling the plugin in the settings menu, you should see the calendar view appear in the right sidebar.
 
 The plugin reads your Daily Note settings to know your date format, your daily note template location, and the location for new daily notes it creates.
+
+Date formats that include folders, such as `YYYY/MM/DD`, are supported. For
+example, set the Daily Notes date format to `YYYY/MM/DD` and the new file location
+to `Daily` to use `Daily/2026/10/14.md`. Leave the location empty to use
+`2026/10/14.md` at the vault root. Calendar recognizes existing notes and creates
+missing notes in the same structure, using the configured template.
 
 ## Features
 
@@ -84,13 +92,24 @@ pnpm run test --runInBand
 ```
 
 The build runs Svelte checks and ESLint before generating `main.js`.
-The repository currently has no test cases; the test command succeeds when none
-are found. `pnpm run test:watch` starts Jest in watch mode.
+Tests cover daily note discovery, hierarchical date formats, and note creation.
+`pnpm run test:watch` starts Jest in watch mode.
 
 Commit dependency changes together with `pnpm-lock.yaml`.
 Legacy Obsidian API dependencies are pinned to the commit from the original Yarn
 lockfile in `pnpm-workspace.yaml`. Node type definitions remain at version 14 to
 preserve compatibility with TypeScript 4.2; the development runtime is Node 24.
+
+To bump the version in `package.json`, `manifest.json`, and `versions.json`
+together, run:
+
+```sh
+npm version patch --no-git-tag-version
+```
+
+Use `minor` or `major` instead of `patch` when appropriate. The `version` lifecycle
+script updates the Obsidian metadata without creating a commit or Git tag when
+using the command above. Run `pnpm run build` after updating the version.
 
 ## FAQ
 
@@ -210,13 +229,3 @@ You can open **weekly notes** in 2 ways: searching `Calendar: open weekly note` 
 - [Nick Milo provides a nice plugin walkthrough](https://www.youtube.com/watch?v=X61wRmfZU8Y&t=1099s)
 - [Santi Younger demos how Calendar + Periodic Notes can be used for weekly review](https://www.youtube.com/watch?v=T9y8JABS9_Q)
 - [Filipe Donadio uses the calendar to plan his day](https://www.youtube.com/watch?v=hxf3_dXIcqc)
-
-## Say Thanks 🙏
-
-If you like this plugin and would like to buy me a coffee, you can!
-
-[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-violet.png" alt="BuyMeACoffee" width="100">](https://www.buymeacoffee.com/liamcain)
-
-Like my work and want to see more like it? You can sponsor me.
-
-[![GitHub Sponsors](https://img.shields.io/github/sponsors/liamcain?style=social)](https://github.com/sponsors/liamcain)

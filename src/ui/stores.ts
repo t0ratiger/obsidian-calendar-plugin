@@ -1,11 +1,9 @@
 import type { TFile } from "obsidian";
-import {
-  getAllDailyNotes,
-  getAllWeeklyNotes,
-} from "obsidian-daily-notes-interface";
+import { getAllWeeklyNotes } from "obsidian-daily-notes-interface";
 import { writable } from "svelte/store";
 
 import { defaultSettings, ISettings } from "src/settings";
+import { getAllDailyNotes } from "src/io/dailyNotePaths";
 
 import { getDateUIDFromFile } from "./utils";
 

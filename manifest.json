@@ -2,10 +2,9 @@
   "id": "calendar",
   "name": "Calendar",
   "description": "Calendar view of your daily notes",
-  "version": "1.5.10",
+  "version": "1.0.0",
   "author": "Liam Cain",
   "authorUrl": "https://github.com/liamcain/",
-  "fundingUrl": "https://www.buymeacoffee.com/liamcain",
   "isDesktopOnly": false,
   "minAppVersion": "0.9.11"
 }

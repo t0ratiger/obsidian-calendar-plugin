@@ -1,5 +1,6 @@
 import type { TFile } from "obsidian";
 import { getDateFromFile, getDateUID } from "obsidian-daily-notes-interface";
+import { getDailyNoteDate } from "src/io/dailyNotePaths";
 
 export const classList = (obj: Record<string, boolean>): string[] => {
   return Object.entries(obj)
@@ -44,8 +45,7 @@ export function getDateUIDFromFile(file: TFile | null): string {
     return null;
   }
 
-  // TODO: I'm not checking the path!
-  let date = getDateFromFile(file, "day");
+  let date = getDailyNoteDate(file);
   if (date) {
     return getDateUID(date, "day");
   }

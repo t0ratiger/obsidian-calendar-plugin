@@ -11,6 +11,7 @@ import { get } from "svelte/store";
 
 import { TRIGGER_ON_OPEN, VIEW_TYPE_CALENDAR } from "src/constants";
 import { tryToCreateDailyNote } from "src/io/dailyNotes";
+import { getDailyNoteDate } from "src/io/dailyNotePaths";
 import { tryToCreateWeeklyNote } from "src/io/weeklyNotes";
 import type { ISettings } from "src/settings";
 
@@ -56,6 +57,11 @@ export default class CalendarView extends ItemView {
     this.registerEvent(this.app.vault.on("create", this.onFileCreated));
     this.registerEvent(this.app.vault.on("delete", this.onFileDeleted));
     this.registerEvent(this.app.vault.on("modify", this.onFileModified));
+    this.registerEvent(this.app.vault.on("rename", () => {
+      dailyNotes.reindex();
+      weeklyNotes.reindex();
+      this.updateActiveFile();
+    }));
     this.registerEvent(this.app.workspace.on("file-open", this.onFileOpen));
 
     this.settings = null;
@@ -183,7 +189,7 @@ export default class CalendarView extends ItemView {
   }
 
   private async onFileDeleted(file: TFile): Promise<void> {
-    if (getDateFromFile(file, "day")) {
+    if (getDailyNoteDate(file)) {
       dailyNotes.reindex();
       this.updateActiveFile();
     }
@@ -194,7 +200,7 @@ export default class CalendarView extends ItemView {
   }
 
   private async onFileModified(file: TFile): Promise<void> {
-    const date = getDateFromFile(file, "day") || getDateFromFile(file, "week");
+    const date = getDailyNoteDate(file) || getDateFromFile(file, "week");
     if (date && this.calendar) {
       this.calendar.tick();
     }
@@ -202,7 +208,7 @@ export default class CalendarView extends ItemView {
 
   private onFileCreated(file: TFile): void {
     if (this.app.workspace.layoutReady && this.calendar) {
-      if (getDateFromFile(file, "day")) {
+      if (getDailyNoteDate(file)) {
         dailyNotes.reindex();
         this.calendar.tick();
       }
@@ -220,7 +226,7 @@ export default class CalendarView extends ItemView {
   }
 
   private updateActiveFile(): void {
-    const { view } = this.app.workspace.activeLeaf;
+    const view = this.app.workspace.activeLeaf?.view;
 
     let file = null;
     if (view instanceof FileView) {
@@ -239,7 +245,7 @@ export default class CalendarView extends ItemView {
 
     if (activeLeaf.view instanceof FileView) {
       // Check to see if the active note is a daily-note
-      let date = getDateFromFile(activeLeaf.view.file, "day");
+      let date = getDailyNoteDate(activeLeaf.view.file);
       if (date) {
         this.calendar.$set({ displayedMonth: date });
         return;
