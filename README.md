@@ -1,6 +1,6 @@
 # obsidian-calendar-plugin
 
-This is a fork of [liamcain/obsidian-calendar-plugin](https://github.com/liamcain/obsidian-calendar-plugin).
+This is a fork of [liamcain/obsidian-calendar-plugin](https://github.com/liamcain/obsidian-calendar-plugin), modified to support daily note paths in the `YYYY/MM/DD` format.
 
 This plugin for [Obsidian](https://obsidian.md/) creates a simple Calendar view for visualizing and navigating between your daily notes.
 
